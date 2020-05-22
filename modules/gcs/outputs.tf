@@ -61,3 +61,8 @@ output "urls_list" {
   description = "List of bucket URLs."
   value       = [for b in local.buckets : b.name]
 }
+
+output "kms_keys" {
+  description = "List of bucket Encryption Keys."
+  value       = [for bucket, key in var.kms_keys : "${bucket} => ${key}"]
+}

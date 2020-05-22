@@ -26,6 +26,31 @@ module "buckets" {
 }
 ```
 
+## Example - Buckect Encrypted with Cloud KMS
+
+```hcl
+module "buckets" {
+  source     = "./modules/gcs"
+  project_id = "myproject"
+  prefix     = "test"
+  names      = ["bucket-one"]
+  bucket_policy_only = {
+    bucket-one = false
+  }
+  iam_members = {
+    bucket-one = {
+      "roles/storage.admin" = ["group:storage@example.com"]
+    }
+  }
+  iam_roles = {
+    bucket-one = ["roles/storage.admin"]
+  }
+  kms_keys_name = {
+    bucket-one = local.kms_key.self_link
+  }
+}
+```
+
 <!-- BEGIN TFDOC -->
 ## Variables
 
